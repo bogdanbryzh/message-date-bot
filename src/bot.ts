@@ -46,8 +46,8 @@ bot.on('forward_date', async (ctx) => {
 
   ctx.reply(
     `This message was sent on ${dayjs(ctx.message.forward_date * 1000).format(
-      'h:mm:ss A of D MMMM YYYY UTC',
-    )}`,
+      'h:mm:ss A of D MMMM YYYY',
+    )} /utc`,
     {
       reply_to_message_id: ctx.message.message_id,
     },
@@ -59,7 +59,7 @@ bot.on('text', (ctx) => {
     return ctx.reply('Unknown command. Try /help');
 
   ctx.reply(
-    `Current time is ${dayjs().format('h:mm:ss A of D MMMM YYYY UTC')}`,
+    `Current time is ${dayjs().format('h:mm:ss A of D MMMM YYYY')} /utc`,
   );
 });
 
