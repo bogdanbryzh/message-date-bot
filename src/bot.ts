@@ -2,7 +2,6 @@ import { Telegraf } from 'telegraf';
 import dayjs from 'dayjs';
 import { hit as hitCounter, get as getUsage } from 'countapi-js';
 import pluralize from 'pluralize';
-import replyWithDate from './replyWithDate';
 
 const token = process.env.BOT_TOKEN as string;
 const webhookURL = process.env.WEBHOOK_URL as string;
@@ -13,44 +12,50 @@ const bot = new Telegraf(token);
 
 bot.start((ctx) => {
   ctx.reply(
-    `👋🏻 Welcome!\nForward me a message and I'll tell you when it was sent 👀`,
+    "👋🏻 Welcome!\nForward me a message and I'll tell you when it was sent 👀",
+  );
+});
+
+bot.help((ctx) => {
+  ctx.reply(
+    'A tiny 🤖 to get actual date of a message.\nNo custom commands are provided for now.',
   );
 });
 
 bot.command('usage', async (ctx) => {
   const { value, status } = await getUsage(namespace, 'usage');
 
-  if (status === 200)
-    ctx.reply(`${value} ${pluralize('message', value)} reached so far!`);
-  else ctx.reply('Network or countapi problems');
-});
+  if (status !== 200) return ctx.reply('Network or countapi problems');
 
-bot.command('date', async (ctx) => {
-  const { from, chat } = ctx.message;
-
-  if (from.id === chat.id)
-    return ctx.reply('This option is available only in groups');
-  ctx.reply(await replyWithDate(ctx.message.date, namespace), {
-    reply_to_message_id: ctx.message.message_id,
-  });
+  ctx.reply(`${value} ${pluralize('message', value)} reached so far!`);
 });
 
 bot.on('forward_date', async (ctx) => {
-  if (ctx.message.forward_date) {
-    ctx.reply(await replyWithDate(ctx.message.date, namespace), {
-      reply_to_message_id: ctx.message.message_id,
-    });
-  } else {
-    ctx.reply('huh, ping @bogdanbpeterson');
-    console.log(ctx);
+  if (!ctx.message.forward_date) {
+    console.log('forward_date', ctx);
+    return ctx.reply('huh, ping @bogdanbpeterson');
   }
+
+  await hitCounter(namespace, 'usage');
+
+  ctx.reply(
+    dayjs(ctx.message.forward_date * 1000).format('h:mm:ss A\nD MMMM YYYY'),
+    {
+      reply_to_message_id: ctx.message.message_id,
+    },
+  );
 });
 
-bot.on('message', (ctx) => {
-  const { from, chat } = ctx.message;
+bot.on('text', (ctx) => {
+  if (/^\//.test(ctx.message.text))
+    return ctx.reply('Unknown command. Try /help');
 
-  if (from.id === chat.id) return ctx.reply('Please forward, not send 🙃');
-  ctx.reply('Please, tag instead of reply 🙃');
+  ctx.reply(`Current time is ${dayjs().format('h:mm:ss A of D MMMM YYYY')}`);
+});
+
+bot.catch((err, ctx) => {
+  console.log('error', err);
+  console.log('ctx', ctx);
 });
 
 bot.launch({
