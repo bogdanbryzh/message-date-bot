@@ -32,7 +32,7 @@ bot.command('usage', async (ctx) => {
 
 bot.command('utc', (ctx) => {
   ctx.replyWithHTML(
-    'UTC stands for Universal Time Coordinated. More on <a href="https://en.wikipedia.org/wiki/Coordinated_Universal_Time">wikipedia</a>',
+    'UTC stands for Universal Time Coordinated. More on <a href="https://en.wikipedia.org/wiki/Coordinated_Universal_Time">Wikipedia</a>',
   );
 });
 
