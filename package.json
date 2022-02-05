@@ -1,7 +1,7 @@
 {
   "name": "forward-date-bot",
   "version": "0.0.1",
-  "description": "A tiny bot to get send date of message in telegram",
+  "description": "A tiny bot to get actual date of message in telegram",
   "main": "./dist/bot.js",
   "scripts": {
     "start": "node .",
