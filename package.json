@@ -1,0 +1,20 @@
+{
+  "name": "forward-date-bot",
+  "version": "0.0.1",
+  "description": "A tiny bot to get send date of message in telegram",
+  "main": "dist/bot.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/bogdanbpeterson/message-date-bot.git"
+  },
+  "keywords": [
+    "bot",
+    "telegram"
+  ],
+  "author": "Bogdan B Peterson <bogdan.bryzh@gmail.com>",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/bogdanbpeterson/message-date-bot/issues"
+  },
+  "homepage": "https://github.com/bogdanbpeterson/message-date-bot#readme"
+}
