@@ -39,7 +39,7 @@ bot.on('forward_date', async (ctx) => {
   await hitCounter(namespace, 'usage');
 
   ctx.reply(
-    dayjs(ctx.message.forward_date * 1000).format('h:mm:ss A\nD MMMM YYYY'),
+    `This message was sent on ${dayjs(ctx.message.forward_date * 1000).format('h:mm:ss A of D MMMM YYYY UTC')}`,
     {
       reply_to_message_id: ctx.message.message_id,
     },
