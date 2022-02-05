@@ -9,8 +9,7 @@ const port = Number(process.env.PORT || 4006);
 const bot = new Telegraf(token as string);
 
 bot.start((ctx) => {
-  ctx.reply(`👋🏻 Welcome!
-  Forward me a message and I'll tell you when it was sent 👀`);
+  ctx.reply(`👋🏻 Welcome!\nForward me a message and I'll tell you when it was sent 👀`);
 });
 
 bot.on('forward_date', async (ctx) => {
