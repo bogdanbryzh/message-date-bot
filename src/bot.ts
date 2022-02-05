@@ -30,12 +30,16 @@ bot.command('date', async (ctx) => {
 
   if (from.id === chat.id)
     return ctx.reply('This option is available only in groups');
-  replyWithDate(ctx.message.date, { ctx, ns: namespace });
+  ctx.reply(await replyWithDate(ctx.message.date, namespace), {
+    reply_to_message_id: ctx.message.message_id,
+  });
 });
 
 bot.on('forward_date', async (ctx) => {
   if (ctx.message.forward_date) {
-    replyWithDate(ctx.message.forward_date, { ctx, ns: namespace });
+    ctx.reply(await replyWithDate(ctx.message.date, namespace), {
+      reply_to_message_id: ctx.message.message_id,
+    });
   } else {
     ctx.reply('huh, ping @bogdanbpeterson');
     console.log(ctx);
