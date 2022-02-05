@@ -30,6 +30,12 @@ bot.command('usage', async (ctx) => {
   ctx.reply(`${value} ${pluralize('message', value)} reached so far!`);
 });
 
+bot.command('utc', (ctx) => {
+  ctx.replyWithMarkdownV2(
+    'UTC stands for Universal Time Coordinated. More on [wikipedia](https://en.wikipedia.org/wiki/Coordinated_Universal_Time)',
+  );
+});
+
 bot.on('forward_date', async (ctx) => {
   if (!ctx.message.forward_date) {
     console.log('forward_date', ctx);
@@ -39,7 +45,9 @@ bot.on('forward_date', async (ctx) => {
   await hitCounter(namespace, 'usage');
 
   ctx.reply(
-    `This message was sent on ${dayjs(ctx.message.forward_date * 1000).format('h:mm:ss A of D MMMM YYYY UTC')}`,
+    `This message was sent on ${dayjs(ctx.message.forward_date * 1000).format(
+      'h:mm:ss A of D MMMM YYYY UTC',
+    )}`,
     {
       reply_to_message_id: ctx.message.message_id,
     },
@@ -50,7 +58,9 @@ bot.on('text', (ctx) => {
   if (/^\//.test(ctx.message.text))
     return ctx.reply('Unknown command. Try /help');
 
-  ctx.reply(`Current time is ${dayjs().format('h:mm:ss A of D MMMM YYYY')}`);
+  ctx.reply(
+    `Current time is ${dayjs().format('h:mm:ss A of D MMMM YYYY UTC')}`,
+  );
 });
 
 bot.catch((err, ctx) => {
