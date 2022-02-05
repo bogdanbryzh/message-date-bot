@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { Telegraf } from 'telegraf';
 import dayjs from 'dayjs';
 import { hit as hitCounter, get as getUsage } from 'countapi-js';
