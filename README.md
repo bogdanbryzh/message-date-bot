@@ -1,4 +1,4 @@
-# forward-date-bot
+# Message date bot
 
 A tiny bot to get actual date of message in telegram
 
